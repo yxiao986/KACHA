@@ -1084,7 +1084,7 @@
 
     <script>
         // 性能监控和调试信息
-        console.log('🚀 KACHA 应用启动 - 开始性能监控...');
+        console.log('🚀 KACHA 启动 - 开始性能监控...');
         const startTime = performance.now();
         
         // 全局状态管理
@@ -2192,7 +2192,7 @@ function generateOptimalRoute() {
         async function initializeApp() {
             const appInitStart = performance.now();
             console.log('🚀 开始初始化 KACHA 应用程序（极速模式）...');
-            showLoading('⚡ 正在快速启动...');
+            showLoading('⚡ 正在快速啟動...');
             
             try {
                 // 第1步：立即加载数据（通常很快，<1秒）
@@ -2217,11 +2217,11 @@ function generateOptimalRoute() {
                 }
                 
                 // 第3步：立即显示界面（用户体验优先！）
-                updateLoadingProgress(60, '界面已就绪...');
+                updateLoadingProgress(60, 'Interface Ready...');
                 hideLoading();
                 
                 const uiReadyTime = ((performance.now() - appInitStart) / 1000).toFixed(1);
-                console.log(`⏱️ 界面加载完成: ${uiReadyTime}s`);
+                console.log(`⏱️ 界面加載完成: ${uiReadyTime}s`);
                 
                 // 显示成功消息
                 showSuccessMessageFast(uiReadyTime);
@@ -2445,9 +2445,9 @@ function generateOptimalRoute() {
             const msg = document.createElement('div');
             msg.className = 'success-toast';
             msg.innerHTML = `
-                <h3>⚡ KACHA 已就绪！</h3>
-                <p>界面加载时间: ${loadTime}秒</p>
-                <p style="font-size: 12px; opacity: 0.8;">地图正在后台加载中...</p>
+                <h3>⚡ KACHA ready!</h3>
+                <p>Interface Loading Time: ${loadTime} s</p>
+                <p style="font-size: 12px; opacity: 0.8;">Map loading in backend...</p>
             `;
             document.body.appendChild(msg);
             
@@ -3340,7 +3340,7 @@ ${photoTip[angleIndex.toString()]}
 
     <footer style="background: #333; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%; font-size: 0.8em;">
         <a href="https://www.discoverhongkong.com/us/index.html" target="_blank" style="color: #ccc; text-decoration: none;">Discover Hong Kong</a>
-        &copy; Copyright 2026 Janet Ka Man CHOI, Yufan XIAO, Zihan WANG
+        &copy; Copyright <script>document.write(new Date().getFullYear());</script> Janet Ka Man CHOI, Yufan XIAO, Zihan WANG
     </footer>
 </body>
 </html>
