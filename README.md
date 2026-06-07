@@ -2,7 +2,7 @@
 以影視文化驅動大灣區文旅發展的智能服務平台
 
 
-## Website Demo
+## 網站演示 Website Demo
 https://janetckm.github.io/KACHA
 
 ## 項目簡介
