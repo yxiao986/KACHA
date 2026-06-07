@@ -1,0 +1,281 @@
+{
+  "businesses": {
+    "Central": [
+      {
+        "name": "陸羽茶室",
+        "type": "茶餐廳",
+        "rating": 4.2,
+        "hours": "07:00-20:00",
+        "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop",
+        "distance": "200m",
+        "price": "$$",
+        "specialty": "傳統點心、絲襪奶茶",
+        "booking": true,
+        "description": "建於1933年的傳統茶室，多部電影取景地",
+        "contact": "+852-2523-7771",
+        "amenities": ["WiFi", "冷氣", "信用卡"]
+      },
+      {
+        "name": "蘭桂坊咖啡店",
+        "type": "咖啡館",
+        "rating": 4.5,
+        "hours": "08:00-23:00",
+        "image": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=300&h=200&fit=crop",
+        "distance": "150m",
+        "price": "$",
+        "specialty": "精品咖啡、輕食",
+        "booking": false,
+        "description": "位於蘭桂坊的特色咖啡店",
+        "contact": "+852-2523-7772",
+        "amenities": ["WiFi", "外賣", "戶外座位"]
+      },
+      {
+        "name": "都爹利街星巴克",
+        "type": "咖啡館",
+        "rating": 4.3,
+        "hours": "07:00-22:00",
+        "image": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=300&h=200&fit=crop",
+        "distance": "300m",
+        "price": "$$",
+        "specialty": "經典咖啡、石階景觀",
+        "booking": false,
+        "description": "位於經典花崗石階旁的特色星巴克",
+        "contact": "+852-2523-7773",
+        "amenities": ["WiFi", "景觀座位", "歷史建築"]
+      }
+    ],
+    "Tsim Sha Tsui": [
+      {
+        "name": "廟街夜市小食",
+        "type": "街頭小食",
+        "rating": 4.0,
+        "hours": "18:00-02:00",
+        "image": "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=300&h=200&fit=crop",
+        "distance": "300m",
+        "price": "$",
+        "specialty": "港式街頭美食",
+        "booking": false,
+        "description": "正宗港式街頭小食，體驗本地文化",
+        "contact": "+852-2345-6789",
+        "amenities": ["路邊小食", "現金支付", "即買即食"]
+      },
+      {
+        "name": "海港城購物咖啡",
+        "type": "咖啡館",
+        "rating": 4.3,
+        "hours": "10:00-22:00",
+        "image": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=300&h=200&fit=crop",
+        "distance": "400m",
+        "price": "$$",
+        "specialty": "景觀咖啡、甜品",
+        "booking": true,
+        "description": "海港城內的高級咖啡廳，享有海景",
+        "contact": "+852-2735-9876",
+        "amenities": ["海景", "WiFi", "信用卡"]
+      },
+      {
+        "name": "星光大道茶餐廳",
+        "type": "茶餐廳",
+        "rating": 4.1,
+        "hours": "07:00-23:00",
+        "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop",
+        "distance": "200m",
+        "price": "$",
+        "specialty": "港式早餐、奶茶",
+        "booking": false,
+        "description": "位於星光大道旁的傳統茶餐廳",
+        "contact": "+852-2987-6543",
+        "amenities": ["傳統風味", "快速服務", "現金支付"]
+      }
+    ],
+    "Mong Kok": [
+      {
+        "name": "女人街小吃店",
+        "type": "港式小食",
+        "rating": 3.9,
+        "hours": "11:00-23:00",
+        "image": "https://images.unsplash.com/photo-1563379091339-03246963d96a?w=300&h=200&fit=crop",
+        "distance": "100m",
+        "price": "$",
+        "specialty": "魚蛋、格仔餅",
+        "booking": false,
+        "description": "女人街區內的人氣小食店",
+        "contact": "+852-2345-1234",
+        "amenities": ["地方小食", "購物方便", "現金支付"]
+      },
+      {
+        "name": "旺角茶餐廳",
+        "type": "茶餐廳",
+        "rating": 4.0,
+        "hours": "06:30-24:00",
+        "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop",
+        "distance": "150m",
+        "price": "$",
+        "specialty": "港式茶餐、菠蘿油",
+        "booking": false,
+        "description": "24小時營業的傳統茶餐廳",
+        "contact": "+852-2345-5678",
+        "amenities": ["24小時", "傳統風味", "快速服務"]
+      }
+    ],
+    "Yau Ma Tei": [
+      {
+        "name": "油麻地茶餐廳",
+        "type": "茶餐廳",
+        "rating": 4.1,
+        "hours": "06:00-22:00",
+        "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop",
+        "distance": "250m",
+        "price": "$",
+        "specialty": "港式早餐、奶茶",
+        "booking": false,
+        "description": "油麻地地区的传统茶餐厅",
+        "contact": "+852-2398-7654",
+        "amenities": ["傳統風味", "地方特色", "現金支付"]
+      },
+      {
+        "name": "上海街小食",
+        "type": "上海小食",
+        "rating": 4.2,
+        "hours": "10:00-20:00",
+        "image": "https://images.unsplash.com/photo-1563379091339-03246963d96a?w=300&h=200&fit=crop",
+        "distance": "180m",
+        "price": "$",
+        "specialty": "小籠包、生煎包",
+        "booking": false,
+        "description": "正宗上海小食，手工制作",
+        "contact": "+852-2398-1234",
+        "amenities": ["手工制作", "正宗口味", "現金支付"]
+      }
+    ],
+    "Sai Kung": [
+      {
+        "name": "西貢海鮮餐廳",
+        "type": "海鮮餐廳",
+        "rating": 4.4,
+        "hours": "11:00-22:00",
+        "image": "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=300&h=200&fit=crop",
+        "distance": "500m",
+        "price": "$$$",
+        "specialty": "新鮮海鮮、海景觀賞",
+        "booking": true,
+        "description": "西貢著名的海鮮餐廳，享有海景",
+        "contact": "+852-2792-3456",
+        "amenities": ["海景", "新鮮海鮮", "預訂服務"]
+      }
+    ]
+  },
+  "photoGuides": {
+    "Fallen Angel": {
+      "title": "《墮落天使》經典角度",
+      "description": "模仿王家衛導演的獨特拍攝角度，使用廣角鏡頭營造迷幻效果",
+      "tips": [
+        "使用廣角鏡頭創造獨特的透視效果",
+        "選擇黃昏或夜晚時分拍攝，營造迷幻氛圍",
+        "尋找反射鏡面增加層次感和深度",
+        "穿著暗色系服裝融入場景",
+        "利用慢快門拍攝移動效果"
+      ],
+      "composition": "三分法構圖，人物位於右側交叉點",
+      "lighting": "昏黃色路燈效果，營造懷舊氛圍",
+      "camera": "建議使用廣角鏡頭，光圈f/2.8-4",
+      "time": "黃昏或夜晚最佳"
+    },
+    "Infernal Affairs": {
+      "title": "《無間道》經典天台場景",
+      "description": "重現劉德華與梁朝偉的天台對決場景",
+      "tips": [
+        "選擇晴朗天氣，天空背景更佳",
+        "使用長焦鏡頭壓縮空間感",
+        "注意安全，選擇合適天台拍攝",
+        "穿著正式服裝還原電影場景",
+        "利用風吹動衣角增加戲劇效果"
+      ],
+      "composition": "中心構圖，營造緊張對峙氣氛",
+      "lighting": "自然日光，側光拍攝",
+      "camera": "建議使用85mm以上長焦鏡頭",
+      "time": "日間拍攝，避免強烈逆光"
+    },
+    "Chungking Express": {
+      "title": "《重慶森林》快餐店角度",
+      "description": "重現金城武在快餐店的經典獨白場景",
+      "tips": [
+        "選擇24小時快餐店作為拍攝場地",
+        "模仿昏黃色燈光營造懷舊氛圍",
+        "準備同款鳳梨罐頭作為道具",
+        "使用慢快門營造動感模糊效果",
+        "尋找有特色的店內裝飾做背景"
+      ],
+      "composition": "框架構圖，利用店內裝飾做前景",
+      "lighting": "昏黃室內燈光，營造溫暖氛圍",
+      "camera": "建議使用35mm鏡頭，光圈f/1.8-2.8",
+      "time": "夜間拍攝效果更佳"
+    },
+    "Better Tomorrow": {
+      "title": "《英雄本色》經典場景",
+      "description": "重現周潤發的經典黑社會造型",
+      "tips": [
+        "準備經典墨鏡和大衣服裝",
+        "選擇有階梯或高台的場景",
+        "模仿電影中的走路姿態和表情",
+        "利用樓梯創造層次構圖",
+        "尋找相似的城市街景背景"
+      ],
+      "composition": "低角度拍攝，創造英雄氣概",
+      "lighting": "逆光或側光拍攝，創造剪影效果",
+      "camera": "建議使用50mm標準鏡頭",
+      "time": "黃金時段拍攝最佳"
+    }
+  },
+  "tourismPackages": [
+    {
+      "id": "classic-movie-tour",
+      "name": "經典電影巡禮",
+      "description": "遊覽4部經典電影的拍攝場景，包含專業導覽和拍攝指導",
+      "duration": "4小時",
+      "price": 350,
+      "includes": ["專業導遊", "交通接送", "拍攝指導", "紀念照片"],
+      "locations": ["重慶大厦", "中環天台", "旺角街市", "油麻地警署"]
+    },
+    {
+      "id": "wong-kar-wai-experience",
+      "name": "王家衛電影深度體驗",
+      "description": "專為王家衛電影粉絲設計的深度文化體驗",
+      "duration": "6小時",
+      "price": 680,
+      "includes": ["專業攝影師", "服裝租借", "場景重現", "精修照片10張"],
+      "locations": ["重慶森林快餐店", "墮落天使酒吧", "阿飛正傳場景"]
+    },
+    {
+      "id": "hong-kong-nostalgia",
+      "name": "老香港情懷之旅",
+      "description": "穿越時空回到80-90年代的香港，體驗經典電影中的懷舊氛圍",
+      "duration": "8小時",
+      "price": 880,
+      "includes": ["古董車接送", "傳統午餐", "老香港導覽", "懷舊小食"],
+      "locations": ["中環老街", "旺角夜市", "油麻地警署", "旺角女人街"]
+    }
+  ],
+  "culturalInfo": {
+    "Central": {
+      "history": "中環是香港的商業中心，也是多部電影的取景地，反映了香港的繁華與活力。",
+      "culture": "這裡融合了傳統與現代，是體驗香港都市文化的絕佳地點。",
+      "highlights": ["都爹利街石階", "蘭桂坊", "中環摩天輪", "立法會大樓"]
+    },
+    "Tsim Sha Tsui": {
+      "history": "尖沙咀是香港的文化重心，擁有豐富的文化設施和歷史建築。",
+      "culture": "這裡是欣賞維港夜景和體驗香港文化藝術的熱門地點。",
+      "highlights": ["星光大道", "尖沙咀鐘樓", "香港文化中心", "海港城"]
+    },
+    "Mong Kok": {
+      "history": "旺角是香港最熱鬧的地區之一，反映了香港的庶民文化和活力。",
+      "culture": "這裡充滿了地道的香港生活氣息，是體驗本土文化的最佳選擇。",
+      "highlights": ["女人街", "波鞋街", "旺角警署", "朗豪坊"]
+    },
+    "Yau Ma Tei": {
+      "history": "油麻地是香港的傳統社區，保留了濃厚的本土文化和歷史特色。",
+      "culture": "這裡有著濃厚的人情味和傳統香港的生活方式。",
+      "highlights": ["油麻地警署", "廟街夜市", "玉器市場", "榕樹頭"]
+    }
+  }
+}
