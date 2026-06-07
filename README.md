@@ -3,7 +3,8 @@
 **KACHA! 電影文旅地圖**  
 —— 以影視文化驅動大灣區文旅發展的智能服務平台
 
-## Website: https://janetckm.github.io/KACHA
+## Website Demo
+https://janetckm.github.io/KACHA
 
 ## 項目簡介
 
