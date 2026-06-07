@@ -1748,15 +1748,51 @@
                 console.error('❌ 清除路線失敗:', error);
             }
         }
+        
+        // 只清除地图上的路线标记，不清除选中的地点
+        function clearRouteMarkersOnly() {
+            try {
+                // 清除地图上的路线标记
+                if (routeMarkers && routeMarkers.length > 0) {
+                    routeMarkers.forEach(marker => {
+                        if (marker && map) {
+                            map.remove(marker);
+                        }
+                    });
+                    routeMarkers = [];
+                    console.log('🗑️ 已清除舊路由標記');
+                }
+                
+                if (map) {
+                    // 清除所有路由相關的地圖對象
+                    const allOverlays = map.getAllOverlays();
+                    allOverlays.forEach(overlay => {
+                        if (overlay instanceof AMap.Polyline || 
+                            (overlay.getExtData && overlay.getExtData().route)) {
+                            map.remove(overlay);
+                        }
+                    });
+                }
+                
+            } catch (error) {
+                console.error('❌ 清除路線標記失敗:', error);
+            }
+        }
 
 function generateOptimalRoute() {
+    console.log('🔘 生成最佳路線按鈕被點擊');
+    console.log('📋 已選地點數量:', selectedLocations.length);
+    console.log('📋 已選地點:', selectedLocations.map(loc => loc.film_name));
+    
     if (selectedLocations.length === 0) {
+        console.log('⚠️ 沒有選擇任何地點');
         showAlert('請先選擇要遊覽的地點', true);
         return;
     }
     
     // 如果有至少2个地点，使用路线规划功能
     if (selectedLocations.length >= 2) {
+        console.log('✅ 有足夠的地點進行路線規劃');
         // 设置当前选中的位置为起点（使用第一个选中的地点）
         locations.forEach(loc => loc.selected = false);
         if (selectedLocations[0]) {
@@ -1764,6 +1800,7 @@ function generateOptimalRoute() {
             const locationIndex = locations.findIndex(loc => loc.film_name === firstLocation.film_name);
             if (locationIndex !== -1) {
                 locations[locationIndex].selected = true;
+                console.log('📍 設置起點為:', firstLocation.film_name);
             }
         }
         
@@ -1772,14 +1809,19 @@ function generateOptimalRoute() {
             return locations.findIndex(l => l.film_name === loc.film_name);
         }).filter(index => index !== -1);
         
+        console.log('🎯 目的地索引:', destinationIndices);
+        
         if (destinationIndices.length > 0) {
+            console.log('🚀 調用 planRoute 進行路線規劃');
             planRoute(destinationIndices);
         } else {
+            console.log('⚠️ 無法找到有效的目的地索引');
             const locationsList = selectedLocations.map((loc, i) => `${i+1}. ${loc.film_name} (${loc.Area})`).join('\n');
             showAlert(`🚗 最佳遊覽路線:\n\n${locationsList}\n\n預計遊覽時間: ${selectedLocations.length * 45}分鐘`);
         }
     } else {
         // 只有一个地点时显示简单信息
+        console.log('⚠️ 只有一個地點，無法生成路線');
         const locationList = selectedLocations.map((loc, i) => `${i+1}. ${loc.film_name} (${loc.Area})`).join('\n');
         showAlert(`📍 已選地點:\n\n${locationList}\n\n請至少選擇2個地點生成路線`);
     }
@@ -2285,6 +2327,10 @@ function generateOptimalRoute() {
                 map.add(testMarker);
                 console.log('📍 测试标记已添加');
                 
+                // 初始化地图服务（包括路线规划服务）
+                initializeEssentialServices();
+                console.log('✅ 地图服务初始化完成');
+                
             } catch (error) {
                 console.error('❌ 地图创建失败:', error);
                 throw error;
@@ -2526,7 +2572,13 @@ function generateOptimalRoute() {
                     radius: 500
                 });
                 
-                console.log('✅ 核心服务初始化完成');
+                // 初始化路线规划服务（用于路线规划功能）
+                driving = new AMap.Driving({
+                    hideMarkers: false,
+                    autoFitView: true
+                });
+                
+                console.log('✅ 核心服务初始化完成（包括路线规划）');
                 return true;
                 
             } catch (error) {
@@ -2780,13 +2832,31 @@ function generateOptimalRoute() {
         
         // 路線規劃功能
         function planRoute(destinations = null) {
+            console.log('🛤️ 開始路線規劃...');
+            console.log('📤 傳入的目的地:', destinations);
+            
+            // 如果driving服务不可用，尝试重新初始化
+            if (!driving && typeof AMap !== 'undefined') {
+                console.log('🔄 嘗試重新初始化路線規劃服務...');
+                try {
+                    driving = new AMap.Driving({
+                        hideMarkers: false,
+                        autoFitView: true
+                    });
+                    console.log('✅ 路線規劃服務重新初始化成功');
+                } catch (error) {
+                    console.error('❌ 路線規劃服務初始化失敗:', error);
+                }
+            }
+            
             if (!map || !amapLoaded || !driving) {
                 console.error('❌ 路線規劃服務不可用');
-                showAlert('路線規劃服務暫不可用，請稍後再試');
+                console.log('📌 地圖狀態 - map:', !!map, 'amapLoaded:', amapLoaded, 'driving:', !!driving);
+                showAlert('路線規劃服務暫不可用，請稍後再試。如果問題持續，請刷新頁面重試。');
                 return;
             }
             
-            console.log('🛤️ 開始路線規劃...');
+            console.log('✅ 路線規劃服務可用');
             
             let destinationIndices = destinations;
             let currentLocation;
@@ -2806,7 +2876,12 @@ function generateOptimalRoute() {
                         const index = locations.findIndex(l => l.film_name === loc.film_name);
                         return index;
                     })
-                    .filter(index => index !== -1 && locations[index] !== currentLocation);
+                    .filter(index => {
+                        if (index === -1) return false;
+                        // 比较位置信息，而不是对象引用
+                        const location = locations[index];
+                        return location.lng !== currentLocation.lng || location.lat !== currentLocation.lat;
+                    });
                 
                 if (destinationIndices.length === 0) {
                     showAlert('請在已選路線中選擇至少一個目的地');
@@ -2819,7 +2894,7 @@ function generateOptimalRoute() {
                 
                 showLoading('正在計算最佳路線...');
                 setTimeout(() => {
-                    generateOptimalRoute(start, destinationIndices, 0);
+                    calculateOptimalRoute(currentLocation, start, destinationIndices, 0);
                 }, 500);
                 return;
             }
@@ -2835,14 +2910,14 @@ function generateOptimalRoute() {
                     console.log('📍 起點:', currentLocation.film_name);
                     console.log('🎯 目的地:', destinationIndices.map(i => locations[i].film_name));
                     
-                    // 清除舊路線
-                    clearRoute();
-                    
-                    // 生成路線順序
-                    showLoading('正在計算最佳路線...');
-                    setTimeout(() => {
-                        generateOptimalRoute(start, destinationIndices, 0);
-                    }, 500);
+                // 清除地圖上的舊路線標記，但不清除選中的地點
+                clearRouteMarkersOnly();
+                
+                // 生成路線順序
+                showLoading('正在計算最佳路線...');
+                setTimeout(() => {
+                    calculateOptimalRoute(currentLocation, start, destinationIndices, 0);
+                }, 500);
                 } else {
                     showAlert('無法找到起始位置');
                 }
@@ -2860,12 +2935,17 @@ function generateOptimalRoute() {
                 
                 showLoading('正在計算最佳路線...');
                 setTimeout(() => {
-                    generateOptimalRoute(start, destinationIndices, 0);
+                    calculateOptimalRoute(currentLocation, start, destinationIndices, 0);
                 }, 500);
             }
         }
         
-        function generateOptimalRoute(start, destinations, attempt) {
+        function calculateOptimalRoute(currentLocation, start, destinations, attempt) {
+            console.log('📋 開始路線優化計算，當前地點:', currentLocation?.film_name || '未知');
+            console.log('📍 起點座標:', start);
+            console.log('🎯 目的地索引:', destinations);
+            console.log('🔄 嘗試次數:', attempt);
+            
             if (attempt > 3) {
                 console.error('❌ 路線規劃失敗，重試次數耗盡');
                 showAlert('無法計算最佳路線，請稍後再試');
@@ -2879,22 +2959,30 @@ function generateOptimalRoute() {
                 let remaining = [...destinations];
                 let current = start;
                 
+                console.log('🔍 開始計算最近鄰路線，剩餘目的地:', remaining);
+                
                 while (remaining.length > 0) {
                     let nearest = findNearestDestination(current, remaining);
+                    console.log('🎯 最近的目的地:', nearest, locations[nearest]?.film_name || '未知');
                     route.push(nearest);
                     remaining = remaining.filter(i => i !== nearest);
                     current = [locations[nearest].lng, locations[nearest].lat];
+                    console.log('📍 移動到新位置:', current);
                 }
                 
                 console.log('✅ 路線順序優化完成');
-                console.log('🚗 順序:', route.map(i => locations[i].film_name));
+                console.log('🚗 最終順序:', route.map(i => locations[i]?.film_name || '未知'));
+                console.log('🔢 路線索引數組:', route);
                 
                 // 繪製路線
+                console.log('🖌️ 開始繪製路線...');
                 drawRoute(currentLocation, route);
                 
             } catch (error) {
-                console.error('❌ 路線優化失敗，嘗試重試:', error);
-                generateOptimalRoute(start, destinations, attempt + 1);
+                console.error('❌ 路線優化失敗，詳細錯誤:', error);
+                console.error('❌ 錯誤堆棧:', error.stack);
+                console.error('❌ 嘗試重試，當前嘗試次數:', attempt);
+                calculateOptimalRoute(currentLocation, start, destinations, attempt + 1);
             }
         }
         
@@ -2931,36 +3019,86 @@ function generateOptimalRoute() {
         }
         
         function drawRoute(currentLocation, routeOrder) {
+            console.log('🚗 drawRoute被調用:', { currentLocation, routeOrder });
+            
             if (!driving) {
                 console.error('❌ 駕駛路線服務不可用');
                 hideLoading();
                 return;
             }
             
-            console.log('🚗 正在繪製路線...');
+            // 檢查路由順序是否有效
+            if (!routeOrder || routeOrder.length === 0) {
+                console.error('❌ 路由順序為空或無效');
+                showAlert('請選擇至少一個目的地');
+                hideLoading();
+                return;
+            }
             
-            // 創建路線標記數組
-            const waypoints = routeOrder.map(index => {
+            console.log('🚗 正在繪製路線，目的地數量:', routeOrder.length);
+            
+            // 創建路線坐標數組
+            const waypointsCoords = routeOrder.map(index => {
+                if (index < 0 || index >= locations.length) {
+                    console.error('❌ 無效的位置索引:', index);
+                    return null;
+                }
                 const loc = locations[index];
-                return new AMap.Waypoint({
-                    location: [loc.lng, loc.lat],
-                    name: loc.film_name
-                });
-            });
+                console.log(`📍 創建途經點 ${index}:`, loc?.film_name, [loc?.lng, loc?.lat]);
+                return [loc.lng, loc.lat];
+            }).filter(coord => coord !== null);
             
-            // 繪製路線
-            const startPoint = new AMap.Waypoint({
-                location: [currentLocation.lng, currentLocation.lat],
-                name: currentLocation.film_name
-            });
+            if (waypointsCoords.length === 0) {
+                console.error('❌ 無法創建有效的途經點');
+                showAlert('無法創建有效的路線點');
+                hideLoading();
+                return;
+            }
+            
+            // 準備路線規劃參數
+            const origin = [currentLocation.lng, currentLocation.lat];
+            const destination = waypointsCoords[waypointsCoords.length - 1];
+            const waypointsArray = waypointsCoords.slice(0, -1);
             
             try {
+                console.log('📍 起點座標:', origin);
+                console.log('🎯 終點座標:', destination);
+                console.log('🚏 途經點:', waypointsArray);
+                console.log('🔧 Driving 服務狀態:', driving ? '可用' : '不可用');
+                console.log('🔧 Map 狀態:', map ? '可用' : '不可用');
+                console.log('🔧 AMap 加載狀態:', amapLoaded);
+                
+                if (!driving) {
+                    console.error('❌ 駕駛路線服務不可用，嘗試重新初始化...');
+                    try {
+                        driving = new AMap.Driving({
+                            hideMarkers: false,
+                            autoFitView: true
+                        });
+                        console.log('✅ 駕駛路線服務重新初始化成功');
+                    } catch (err) {
+                        console.error('❌ 駕駛路線服務初始化失敗:', err);
+                        showAlert('路線規劃服務初始化失敗，請刷新頁面重試');
+                        hideLoading();
+                        return;
+                    }
+                }
+                
+                console.log('📍 規劃參數 - 起點:', origin);
+                console.log('🎯 規劃參數 - 終點:', destination);
+                console.log('🚏 規劃參數 - 途經點:', waypointsArray);
+                
                 driving.search(
-                    [startPoint.location.lng, startPoint.location.lat],
-                    [waypoints[waypoints.length - 1].location[0], waypoints[waypoints.length - 1].location[1]],
-                    { waypoints: waypoints.map(wp => [wp.location[0], wp.location[1]]) },
+                    origin,
+                    destination,
+                    { 
+                        waypoints: waypointsArray 
+                    },
                     function(status, result) {
-                        if (status === 'complete') {
+                        console.log('🚗 路線規劃結果狀態:', status);
+                        console.log('📊 路線規劃結果:', result);
+                        
+                        if (status === 'complete' && result && result.routes && result.routes.length > 0) {
                             console.log('✅ 路線繪製完成');
                             
                             // 添加路線信息到側邊欄
@@ -2985,8 +3123,8 @@ function generateOptimalRoute() {
                             hideLoading();
                             
                         } else {
-                            console.error('❌ 路線搜索失敗:', result);
-                            showAlert('路線規劃失敗，請重試');
+                            console.error('❌ 路線搜索失敗:', status, result);
+                            showAlert('路線規劃失敗，請重試或選擇其他地點');
                             hideLoading();
                         }
                     }
@@ -3193,10 +3331,12 @@ ${photoTip[angleIndex.toString()]}
         
         window.planOptimalRoute = planRoute;
         window.clearRoute = clearRoute;
+        
 
         // 页面加载完成后初始化
         window.onload = initializeApp;
     </script>
+    
 
     <footer style="background: #333; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%; font-size: 0.8em;">
         <a href="https://www.discoverhongkong.com/us/index.html" target="_blank" style="color: #ccc; text-decoration: none;">Discover Hong Kong</a>
